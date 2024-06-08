@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" text="Atrás"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Registrar Incidencia</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h1 class="titulo-pantalla">Formulario de datos</h1>
+
+  <ion-input
+    [(ngModel)]="nuevaIncidencia.CT_Titulo_Incidencia"
+    class="input-incidencia"
+    label="Titulo de la incidencia"
+    labelPlacement="floating"
+    fill="outline"
+    placeholder=""
+  >
+  </ion-input>
+
+  <ion-input
+    [(ngModel)]="nuevaIncidencia.CT_Lugar"
+    class="input-incidencia"
+    label="Lugar del incidente"
+    labelPlacement="floating"
+    fill="outline"
+    placeholder=""
+  >
+  </ion-input>
+
+  <ion-textarea
+    [(ngModel)]="nuevaIncidencia.CT_Descripcion"
+    class="input-incidencia"
+    label="Descripcion"
+    labelPlacement="floating"
+    fill="outline"
+    placeholder=""
+  >
+  </ion-textarea>
+
+  <ion-input
+    class="input-incidencia"
+    label="Titulo de la incidencia"
+    labelPlacement="floating"
+    fill="outline"
+    placeholder=""
+  >
+    <ion-icon name="images-outline"></ion-icon>
+  </ion-input>
+
+  <ion-button class="input-incidencia" shape="round" (click)="crearIncidencia()"
+    >Enviar</ion-button
+  >
+</ion-content>
