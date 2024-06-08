@@ -8,12 +8,20 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-button (click)="redirigir()" expand="block" class="crr-inc-btn"
     >Registrar Incidencia</ion-button
   >
   <br />
   <h1 class="list-title">Lista de incidencias</h1>
-  <ion-card *ngFor="let incidencia of Incidencias" class="blanco">
+
+  <ion-card
+    *ngFor="let incidencia of Incidencias"
+    class="blanco"
+    (click)="onGenerarDiagnostico(incidencia)"
+  >
     <ion-card-header class="card-style">
       <ion-card-title>{{ incidencia.CT_Titulo_Incidencia }}</ion-card-title>
       <div

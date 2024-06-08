@@ -15,7 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    IonicModule.forRoot({ mode: 'ios' }),
+    IonicModule.forRoot({ mode: 'md' }),
     PagesModule,
     SharedModule,
     AppRoutingModule,

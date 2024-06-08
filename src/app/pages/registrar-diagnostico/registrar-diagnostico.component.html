@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" text="Atrás"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Registrar Diagnostico</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h1 class="titulo-pantalla">Diagnostico Incidencia</h1>
+
+  <ion-input
+    class="input-diagnostico"
+    label="Id. Incidencia"
+    labelPlacement="floating"
+    fill="outline"
+    disabled="true"
+    [value]="incidenciaClic?.CN_Id_Incidencia"
+  >
+  </ion-input>
+
+  <ion-input
+    class="input-diagnostico"
+    label="Diagnostico"
+    labelPlacement="floating"
+    fill="outline"
+  >
+  </ion-input>
+
+  <ion-select
+    class="input-diagnostico"
+    label="¿Requiere compra?"
+    label-placement="floating"
+    fill="outline"
+  >
+    <ion-select-option value="true">Sí</ion-select-option>
+    <ion-select-option value="false">No</ion-select-option>
+  </ion-select>
+
+  <ion-input
+    class="input-diagnostico"
+    label="Tiempo estimado"
+    labelPlacement="floating"
+    fill="outline"
+  >
+  </ion-input>
+
+  <ion-select
+    class="input-diagnostico"
+    label="Estado"
+    label-placement="floating"
+    fill="outline"
+  >
+    <ion-select-option value="true">Sí</ion-select-option>
+    <ion-select-option value="false">No</ion-select-option>
+  </ion-select>
+
+  <ion-textarea
+    class="input-diagnostico"
+    label="Observaciones"
+    labelPlacement="floating"
+    fill="outline"
+  >
+  </ion-textarea>
+
+  <ion-input
+    class="input-diagnostico"
+    label="Titulo de la incidencia"
+    labelPlacement="floating"
+    fill="outline"
+  >
+    <ion-icon name="images-outline" slot="end"></ion-icon>
+  </ion-input>
+
+  <ion-button class="input-diagnostico" shape="round">Enviar</ion-button>
+</ion-content>

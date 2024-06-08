@@ -1,3 +1,4 @@
+import { DiagnosticoService } from './../../services/diagnostico.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Incidencia } from 'src/app/models/incidencias.model';
 import { Component, OnInit } from '@angular/core';
@@ -14,7 +15,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     @Inject(Router) private router: Router,
-    public db: FirestoreService
+    public db: FirestoreService,
+    private ds: DiagnosticoService
   ) {}
 
   redirigir() {
@@ -72,7 +74,18 @@ export class HomeComponent implements OnInit {
     return estados.find((est) => est.id === id)?.nombre || 'Desconocido';
   }
 
+  onGenerarDiagnostico(incidencia: Incidencia) {
+    this.ds.setSelectedIncidencia(incidencia);
+    this.router.navigate(['/registrar-diagnostico']);
+  }
+
   ngOnInit() {
     this.extraerIncidencias();
+  }
+  handleRefresh(event: { target: { complete: () => void } }) {
+    setTimeout(() => {
+      window.location.reload();
+      event.target.complete();
+    }, 1000);
   }
 }
