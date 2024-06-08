@@ -8,11 +8,30 @@
 </ion-header>
 
 <ion-content>
-  <!-- Avatar del usuario -->
-  <!-- Botón registrar incidencia -->
-  <ion-button (click)="redirigir()" expand="block"
+  <ion-button (click)="redirigir()" expand="block" class="crr-inc-btn"
     >Registrar Incidencia</ion-button
   >
-  <!-- Carta de incidencia actual -->
-  <!-- Lista de incidencias -->
+  <br />
+  <h1 class="list-title">Lista de incidencias</h1>
+  <ion-card *ngFor="let incidencia of Incidencias" class="blanco">
+    <ion-card-header class="card-style">
+      <ion-card-title>{{ incidencia.CT_Titulo_Incidencia }}</ion-card-title>
+      <div
+        class="circle"
+        [ngClass]="getColorPrioridad(incidencia.CN_Id_Prioridad || 0)"
+      ></div>
+    </ion-card-header>
+
+    <ion-card-content>
+      <div class="card-style card-body">
+        <p class="category">
+          Categoría: {{ getCategoriaNombre(incidencia.CN_Id_Categoria || 0) }}
+        </p>
+        <div class="status">
+          <p>{{ getEstadoNombre(incidencia.CN_Id_Estado || 0) }}</p>
+          <p class="id">{{ incidencia.CN_Id_Incidencia }}</p>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

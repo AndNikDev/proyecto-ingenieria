@@ -1,0 +1,71 @@
+.crr-inc-btn {
+  font-weight: bolder;
+  margin: 15px;
+}
+
+.list-title {
+  margin-left: 20px;
+  font-weight: bold;
+}
+
+.card-style {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: start;
+  font-family: "Inter", sans-serif;
+  font-weight: bold;
+}
+
+.circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.green {
+  background-color: #00ff33;
+}
+
+.yellow {
+  background-color: #faff00;
+}
+
+.red {
+  background-color: #ff0000;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.category,
+.status {
+  flex: 1;
+}
+.category {
+  font-style: italic;
+  color: #969ea4;
+  margin-bottom: 10px;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.status {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: end;
+}
+
+.id {
+  font-weight: bold;
+  justify-content: end;
+  margin-top: 10px;
+}
+
+.blanco {
+  color: white;
+  border-radius: 15px;
+}

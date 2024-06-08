@@ -8,14 +8,15 @@ import { PagesModule } from './pages/pages.module';
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    IonicModule.forRoot({ mode: 'md' }),
+    IonicModule.forRoot({ mode: 'ios' }),
     PagesModule,
+    SharedModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,

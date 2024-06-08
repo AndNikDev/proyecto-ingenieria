@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Incidencia } from 'src/app/models/incidencias.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registrar-incidencia',
@@ -10,8 +11,8 @@ import { Incidencia } from 'src/app/models/incidencias.model';
 export class RegistrarIncidenciaComponent implements OnInit {
   private anioActual: string;
   private contador: number;
-  // datos para el form
   nuevaIncidencia: Incidencia = {
+    CN_Id_Incidencia: '',
     CF_Fecha_Hora_Registro: new Date(),
     CN_Id_Usuario: '',
     CT_Titulo_Incidencia: '',
@@ -19,21 +20,21 @@ export class RegistrarIncidenciaComponent implements OnInit {
     CT_Lugar: '',
     CN_Id_Imagenes: '',
     CN_Id_Tecnico: '',
-    CN_Id_Estado: '',
+    CN_Id_Estado: NaN,
     CT_Justificacion_Estado: '',
-    CN_Id_Prioridad: '',
-    CN_Id_Riesgo: '',
-    CN_Id_Afectacion: '',
-    CN_Id_Categoria: '',
+    CN_Id_Prioridad: NaN,
+    CN_Id_Riesgo: NaN,
+    CN_Id_Afectacion: NaN,
+    CN_Id_Categoria: NaN,
     CD_Costos: NaN,
     CN_Duracion_Gestion: NaN,
   };
 
-  constructor(public db: FirestoreService) {
+  constructor(public db: FirestoreService, private router: Router) {
     this.anioActual = this.obtenerAnioActual();
     this.contador = 0;
   }
-  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
+
   ngOnInit() {}
 
   private obtenerAnioActual(): string {
@@ -41,25 +42,36 @@ export class RegistrarIncidenciaComponent implements OnInit {
     return now.getFullYear().toString();
   }
 
-  public generarId(): string {
+  private async generarId(): Promise<string> {
     const anioActual = this.obtenerAnioActual();
     if (anioActual !== this.anioActual) {
       this.anioActual = anioActual;
       this.contador = 0;
     }
-    this.contador++;
-    const contadorStr = this.contador.toString().padStart(6, '0');
-    return `${this.anioActual}-${contadorStr}`;
+
+    let uniqueId = '';
+    let exists = true;
+
+    while (exists) {
+      this.contador++;
+      const contadorStr = this.contador.toString().padStart(6, '0');
+      uniqueId = `${this.anioActual}-${contadorStr}`;
+      exists = await this.db.docExists('Incidencias', uniqueId);
+    }
+
+    this.nuevaIncidencia.CN_Id_Incidencia = uniqueId;
+    return uniqueId;
   }
 
-  crearIncidencia() {
+  async crearIncidencia() {
     const path = 'Incidencias/';
-    const CN_Id_Incidencia = this.generarId();
+    const CN_Id_Incidencia = await this.generarId();
     if (path !== undefined) {
       this.db
         .createDoc(this.nuevaIncidencia, path, CN_Id_Incidencia)
         .then(() => {
           console.log('Incidencia creada con ID:', CN_Id_Incidencia);
+          this.router.navigate(['/home']);
         })
         .catch((error) => {
           console.error('Error al crear incidencia:', error);
