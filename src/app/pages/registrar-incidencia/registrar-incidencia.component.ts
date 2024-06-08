@@ -35,6 +35,7 @@ export class RegistrarIncidenciaComponent implements OnInit {
     this.contador = 0;
   }
 
+  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit() {}
 
   private obtenerAnioActual(): string {
@@ -62,7 +63,23 @@ export class RegistrarIncidenciaComponent implements OnInit {
     this.nuevaIncidencia.CN_Id_Incidencia = uniqueId;
     return uniqueId;
   }
+  allInputFilled = false;
+  checkInputs() {
+    this.allInputFilled =
+      this.nuevaIncidencia.CT_Titulo_Incidencia.trim() !== '' &&
+      this.nuevaIncidencia.CT_Lugar.trim() !== '' &&
+      this.nuevaIncidencia.CT_Descripcion.trim() !== '';
+  }
 
+  resetInputs() {
+    this.nuevaIncidencia = {
+      CN_Id_Usuario: '',
+      CT_Titulo_Incidencia: '',
+      CT_Lugar: '',
+      CT_Descripcion: '',
+    };
+    this.allInputFilled = false;
+  }
   async crearIncidencia() {
     const path = 'Incidencias/';
     const CN_Id_Incidencia = await this.generarId();
@@ -79,7 +96,8 @@ export class RegistrarIncidenciaComponent implements OnInit {
     } else {
       console.error('Error: Path is undefined');
     }
+    setTimeout(() => {
+      this.resetInputs();
+    }, 3000);
   }
-
-  enableButton() {}
 }

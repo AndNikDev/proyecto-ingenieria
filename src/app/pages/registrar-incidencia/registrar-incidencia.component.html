@@ -12,16 +12,18 @@
 
   <ion-input
     [(ngModel)]="nuevaIncidencia.CT_Titulo_Incidencia"
+    (ngModelChange)="checkInputs()"
     class="input-incidencia"
     label="Titulo de la incidencia"
     labelPlacement="floating"
     fill="outline"
-    placeholder=""
+    required
   >
   </ion-input>
 
   <ion-input
     [(ngModel)]="nuevaIncidencia.CT_Lugar"
+    (ngModelChange)="checkInputs()"
     class="input-incidencia"
     label="Lugar del incidente"
     labelPlacement="floating"
@@ -32,6 +34,7 @@
 
   <ion-textarea
     [(ngModel)]="nuevaIncidencia.CT_Descripcion"
+    (ngModelChange)="checkInputs()"
     class="input-incidencia"
     label="Descripcion"
     labelPlacement="floating"
@@ -50,7 +53,11 @@
     <ion-icon name="images-outline"></ion-icon>
   </ion-input>
 
-  <ion-button class="input-incidencia" shape="round" (click)="crearIncidencia()"
+  <ion-button
+    class="input-incidencia"
+    shape="round"
+    (click)="crearIncidencia()"
+    [disabled]="!allInputFilled"
     >Enviar</ion-button
   >
 </ion-content>

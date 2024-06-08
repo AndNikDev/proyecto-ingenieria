@@ -38,7 +38,10 @@ export class HomeComponent implements OnInit {
       { id: 2, nombre: 'Intervención por causas naturales' },
       { id: 3, nombre: 'Atención al mobiliario' },
     ];
-    return categorias.find((cat) => cat.id === id)?.nombre || 'Desconocida';
+    return (
+      categorias.find((cat) => cat.id === id)?.nombre ||
+      'En espera de asignación'
+    );
   }
 
   getColorPrioridad(prioridad: number): string {
@@ -50,12 +53,13 @@ export class HomeComponent implements OnInit {
       case 3:
         return 'red';
       default:
-        return '';
+        return 'gray';
     }
   }
 
   getEstadoNombre(id: number): string {
     const estados = [
+      { id: 0, nombre: 'En Espera' },
       { id: 1, nombre: 'En revisión' },
       { id: 2, nombre: 'Resuelto' },
       { id: 3, nombre: 'Pendiente' },
