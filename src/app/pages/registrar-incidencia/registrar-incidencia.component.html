@@ -28,7 +28,6 @@
     label="Lugar del incidente"
     labelPlacement="floating"
     fill="outline"
-    placeholder=""
   >
   </ion-input>
 
@@ -39,18 +38,20 @@
     label="Descripcion"
     labelPlacement="floating"
     fill="outline"
-    placeholder=""
   >
   </ion-textarea>
 
   <ion-input
+    [(ngModel)]="nuevaIncidencia.CN_Id_Imagenes"
     class="input-incidencia"
-    label="Titulo de la incidencia"
+    label="Imagenes"
     labelPlacement="floating"
+    type="file"
+    accept="image/*"
+    (change)="newImagenUpload($event)"
     fill="outline"
-    placeholder=""
   >
-    <ion-icon name="images-outline"></ion-icon>
+    <ion-icon name="images-outline" slot="end"></ion-icon>
   </ion-input>
 
   <ion-button

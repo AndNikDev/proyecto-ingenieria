@@ -33,7 +33,6 @@ export class FirestoreService {
     return ref.valueChanges();
   }
 
-  // Nueva función para obtener los datos con el ID del documento
   getCollectionWithId<T>(path: string) {
     const ref = this.db.collection(path);
     return ref.snapshotChanges().pipe(
@@ -47,7 +46,6 @@ export class FirestoreService {
     );
   }
 
-  // Nueva función para verificar si un documento existe
   async docExists(path: string, id: string): Promise<boolean> {
     const doc = await this.db.collection(path).doc(id).get().toPromise();
     return doc?.exists ?? false;

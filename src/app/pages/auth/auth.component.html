@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Autenticación</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="d-flex-center">
+    <form
+      [formGroup]="form"
+      class="auth-form"
+      (ngSubmit)="submit()"
+      (keypress.enter)="submit()"
+    >
+      <app-logo></app-logo>
+      <h1>Inicio de sesión</h1>
+      <app-custom-input
+        autocomplete="email"
+        icon="mail-outline"
+        [control]="emailControl"
+        type="email"
+        label="Correo Electrónico"
+      ></app-custom-input>
+      <div
+        class="validators"
+        *ngIf="
+          emailControl.invalid && (emailControl.dirty || emailControl.touched)
+        "
+      >
+        <div *ngIf="emailControl.errors?.['required']">
+          <ion-icon
+            slot="icon-only"
+            name="warning-outline"
+            size="10"
+          ></ion-icon>
+          El Correo electrónico es requerido
+        </div>
+        <div *ngIf="emailControl.errors?.['email']">
+          <ion-icon
+            slot="icon-only"
+            name="warning-outline"
+            size="10"
+          ></ion-icon>
+          Ingrese un correo válido
+        </div>
+      </div>
+      <app-custom-input
+        icon="lock-closed-outline"
+        [control]="passwordControl"
+        type="password"
+        label="Contraseña"
+      ></app-custom-input>
+      <div
+        class="validators"
+        *ngIf="
+          passwordControl.invalid &&
+          (passwordControl.dirty || passwordControl.touched)
+        "
+      >
+        <div *ngIf="passwordControl.errors?.['required']">
+          <ion-icon
+            slot="icon-only"
+            name="warning-outline"
+            size="10"
+          ></ion-icon>
+          La contraseña es requerida
+        </div>
+      </div>
+      <ion-button
+        expand="block"
+        mode="ios"
+        type="submit"
+        [disabled]="form.invalid"
+      >
+        Iniciar Sesión
+      </ion-button>
+
+      <!-- Mostrar errores de inicio de sesión -->
+      <div *ngIf="loginError" class="error-message">
+        {{ loginError }}
+      </div>
+    </form>
+  </div>
+</ion-content>
