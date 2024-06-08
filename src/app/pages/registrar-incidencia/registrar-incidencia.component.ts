@@ -20,7 +20,7 @@ export class RegistrarIncidenciaComponent implements OnInit {
     CT_Lugar: '',
     CN_Id_Imagenes: '',
     CN_Id_Tecnico: '',
-    CN_Id_Estado: NaN,
+    CN_Id_Estado: 1,
     CT_Justificacion_Estado: '',
     CN_Id_Prioridad: NaN,
     CN_Id_Riesgo: NaN,

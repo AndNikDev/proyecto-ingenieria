@@ -59,11 +59,15 @@ export class HomeComponent implements OnInit {
 
   getEstadoNombre(id: number): string {
     const estados = [
-      { id: 0, nombre: 'En Espera' },
-      { id: 1, nombre: 'En revisión' },
-      { id: 2, nombre: 'Resuelto' },
-      { id: 3, nombre: 'Pendiente' },
-      // Agrega más estados si es necesario
+      { id: 1, nombre: 'Registrado' },
+      { id: 2, nombre: 'Asignado' },
+      { id: 3, nombre: 'En revisión' },
+      { id: 4, nombre: 'En reparación' },
+      { id: 5, nombre: 'Pendiente de compra' },
+      { id: 6, nombre: 'Terminado' },
+      { id: 7, nombre: 'Aprobado' },
+      { id: 8, nombre: 'Rechazado' },
+      { id: 9, nombre: 'Cerrado' },
     ];
     return estados.find((est) => est.id === id)?.nombre || 'Desconocido';
   }
