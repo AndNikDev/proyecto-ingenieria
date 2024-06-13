@@ -7,12 +7,12 @@ export interface Incidencia {
   CT_Lugar: string;
   CN_Id_Imagenes?: string;
   CN_Id_Tecnico?: string;
-  CN_Id_Estado?: number; // Cambiado a number
+  CN_Id_Estado?: number;
   CT_Justificacion_Estado?: string;
-  CN_Id_Prioridad?: number; // Cambiado a number
-  CN_Id_Riesgo?: number; // Cambiado a number
-  CN_Id_Afectacion?: number; // Cambiado a number
-  CN_Id_Categoria?: number; // Cambiado a number
+  CN_Id_Prioridad?: number;
+  CN_Id_Riesgo?: number;
+  CN_Id_Afectacion?: number;
+  CN_Id_Categoria?: number;
   CD_Costos?: number;
   CN_Duracion_Gestion?: number;
 }

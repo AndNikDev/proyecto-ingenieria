@@ -51,6 +51,32 @@ ion-button {
   padding-bottom: env(safe-area-inset-bottom); // for previous ios versions
 }
 
+.input-imagenes {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  background-color: var(--ion-color-primary);
+  color: var(--ion-color-light);
+  border: none;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: var(--ion-color-primary-shade);
+  }
+
+  &:active {
+    background-color: var(--ion-color-primary-tint);
+  }
+}
+
 .d-flex-center {
   display: flex;
   justify-content: center;
@@ -102,6 +128,18 @@ ion-button {
     left: 50%;
     transform: translate(-50%, -50%);
   }
+}
+
+.imagenes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.imagenes-img {
+  justify-content: end;
 }
 
 @media (min-width: 769px) {
