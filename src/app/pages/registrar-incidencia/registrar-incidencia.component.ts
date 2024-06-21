@@ -24,12 +24,12 @@ export class RegistrarIncidenciaComponent implements OnInit {
     CT_Lugar: '',
     CN_Id_Imagenes: '', // Este será un string de URLs de imágenes separadas por comas
     CN_Id_Tecnico: '',
-    CN_Id_Estado: Math.floor(Math.random() * 9) + 1,
+    CN_Id_Estado: NaN,
     CT_Justificacion_Estado: '',
-    CN_Id_Prioridad: Math.floor(Math.random() * 3) + 1,
-    CN_Id_Riesgo: Math.floor(Math.random() * 3) + 1,
-    CN_Id_Afectacion: Math.floor(Math.random() * 3) + 1,
-    CN_Id_Categoria: Math.floor(Math.random() * 3) + 1,
+    CN_Id_Prioridad: NaN,
+    CN_Id_Riesgo: NaN,
+    CN_Id_Afectacion: NaN,
+    CN_Id_Categoria: NaN,
     CD_Costos: NaN,
     CN_Duracion_Gestion: NaN,
   };
@@ -81,7 +81,7 @@ export class RegistrarIncidenciaComponent implements OnInit {
       this.contador++;
       const contadorStr = this.contador.toString().padStart(6, '0');
       uniqueId = `${this.anioActual}-${contadorStr}`;
-      exists = await this.db.docExists('Incidencias', uniqueId);
+      exists = await this.db.docExists('T_Incidencias', uniqueId);
     }
 
     this.nuevaIncidencia.CN_Id_Incidencia = uniqueId;
@@ -109,7 +109,7 @@ export class RegistrarIncidenciaComponent implements OnInit {
   }
 
   async crearIncidencia() {
-    const path = 'Incidencias/';
+    const path = 'T_Incidencias/';
     const CN_Id_Incidencia = await this.generarId();
     if (path !== undefined) {
       const imageUploadPromises = this.newFiles.map((file) => {

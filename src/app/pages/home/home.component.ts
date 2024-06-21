@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
   }
 
   extraerIncidencias() {
-    const path = 'Incidencias/';
+    const path = 'T_Incidencias/';
     this.db.getCollectionWithId<Incidencia>(path).subscribe((data) => {
       this.Incidencias = data;
     });

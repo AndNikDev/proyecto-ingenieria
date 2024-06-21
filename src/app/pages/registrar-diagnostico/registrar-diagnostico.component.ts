@@ -59,7 +59,7 @@ export class RegistrarDiagnosticoComponent implements OnInit {
   }
 
   async crearDiagnostico() {
-    const pathDiagnostico = 'Diagnosticos/';
+    const pathDiagnostico = 'T_Diagnosticos/';
     const CN_Id_Diagnostico = this.nuevoDiagnostico.CN_Id_Diagnostico;
     if (!CN_Id_Diagnostico) {
       console.error('Error: CN_Id_Diagnostico is empty or undefined');
@@ -73,7 +73,7 @@ export class RegistrarDiagnosticoComponent implements OnInit {
       );
       console.log('Diagnóstico creado correctamente', CN_Id_Diagnostico);
       if (this.incidenciaClic) {
-        const pathIncidencia = 'Incidencias/';
+        const pathIncidencia = 'T_Incidencias/';
         const { CN_Id_Incidencia } = this.incidenciaClic;
         const nuevoEstado = this.CN_Id_Estado;
         const updatedIncidencia = { CN_Id_Estado: nuevoEstado };

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router'; // Import the Router class
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -12,11 +12,11 @@ export class AuthComponent implements OnInit {
   form: FormGroup;
   emailControl: FormControl;
   passwordControl: FormControl;
-  loginError: string | null = null; // Variable para manejar errores de login
+  loginError: string | null = null;
 
   constructor(
     private authService: AuthService,
-    private router: Router // Inject the Router class
+    private router: Router
   ) {
     this.emailControl = new FormControl('', [
       Validators.required,
@@ -30,39 +30,25 @@ export class AuthComponent implements OnInit {
     });
   }
 
-  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/home']);
+    }
+  }
 
-  submit() {
+  async submit() {
     if (this.form.invalid) {
       return;
     }
 
     const { email, password } = this.form.value;
 
-    this.authService
-      .login(email, password)
-      .then(() => {
-        console.log('Inicio de sesión exitoso');
-        this.loginError = null; // Limpiar errores
-        this.router.navigate(['/home']);
-      })
-      .catch((error) => {
-        console.error('Error en el inicio de sesión:', error);
-        this.loginError = this.getErrorMessage(error); // Asignar mensaje de error
-      });
-  }
-
-  private getErrorMessage(error: any): string {
-    switch (error.code) {
-      case 'auth/user-not-found':
-        return 'Usuario no encontrado';
-      case 'auth/wrong-password':
-        return 'Contraseña incorrecta';
-      case 'auth/invalid-email':
-        return 'Correo electrónico no válido';
-      default:
-        return 'Error en el inicio de sesión. Por favor, inténtelo de nuevo.';
+    try {
+      await this.authService.login(email, password);
+      this.loginError = null; // Limpiar errores
+    } catch (error: any) {
+      console.error('Error en el inicio de sesión:', error);
+      this.loginError = error.message || 'Error en el inicio de sesión. Por favor, inténtelo de nuevo.';
     }
   }
 }
