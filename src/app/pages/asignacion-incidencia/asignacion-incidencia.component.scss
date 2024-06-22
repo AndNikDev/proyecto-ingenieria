@@ -9,3 +9,30 @@
   margin-bottom: 10px;
   width: calc(100% - 40px);
 }
+
+.image-preview-container {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  margin: 10px 0 !important;
+}
+
+.image-preview {
+  position: relative !important;
+  display: inline-block !important;
+  margin-left: 20px !important;
+}
+
+.image-preview img {
+  width: 100px !important;
+  height: 100px !important;
+  object-fit: cover !important;
+  border-radius: 8px !important;
+}
+
+.image-preview ion-button {
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  transform: translate(50%, -50%) !important;
+}

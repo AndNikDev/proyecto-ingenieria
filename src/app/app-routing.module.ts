@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   {
     path: 'registrar-incidencia',
-    component: RegistrarIncidenciaComponent,
+    loadChildren: () => import('./pages/registrar-incidencia/registrar-incidencia.component').then(m => m.RegistrarIncidenciaComponent),
     canActivate: [AuthGuard],
   },
   {

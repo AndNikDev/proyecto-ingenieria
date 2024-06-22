@@ -1,20 +1,34 @@
-import { DiagnosticoService } from './../../services/diagnostico.service';
-import { FirestoreService } from 'src/app/services/firestore.service';
-import { Incidencia } from 'src/app/models/incidencias.model';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Inject } from '@angular/core';
+import { FirestoreService } from 'src/app/services/firestore.service';
+import { DiagnosticoService } from 'src/app/services/diagnostico.service';
+import { Incidencia } from 'src/app/models/incidencias.model';
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
+  animations: [
+    trigger('toggleHeight', [
+      state('visible', style({ height: '*', opacity: 1 })),
+      state('hidden', style({ height: 0, opacity: 0 })),
+      transition('visible <=> hidden', animate('0.5s ease-in-out')),
+    ]),
+  ],
 })
 export class HomeComponent implements OnInit {
   Incidencias: Incidencia[] = [];
+  expanded: { [key: string]: boolean } = {};
 
   constructor(
-    @Inject(Router) private router: Router,
+    private router: Router,
     public db: FirestoreService,
     private ds: DiagnosticoService
   ) {}
@@ -27,11 +41,28 @@ export class HomeComponent implements OnInit {
     const path = 'T_Incidencias/';
     this.db.getCollectionWithId<Incidencia>(path).subscribe((data) => {
       this.Incidencias = data;
+      // Inicializar el estado de visibilidad para cada incidencia
+      this.Incidencias.forEach(incidencia => {
+        this.expanded[incidencia.CN_Id_Incidencia!] = false;
+      });
     });
   }
 
-  generarDiagnostico(idIncidencia: string) {
-    this.router.navigate(['/diagnostico-incidencia', idIncidencia]);
+  toggleCollapse(incidencia: Incidencia) {
+    const id = incidencia.CN_Id_Incidencia;
+    if (id !== undefined) {
+      this.expanded[id] = !this.expanded[id];
+    }
+  }
+
+  onGenerarDiagnostico(incidencia: Incidencia) {
+    this.ds.setSelectedIncidencia(incidencia);
+    this.router.navigate(['/registrar-diagnostico']);
+  }
+
+  onAsignarIncidencia(incidencia: Incidencia) {
+    this.ds.setSelectedIncidencia(incidencia);
+    this.router.navigate(['/asignacion-incidencia']);
   }
 
   getCategoriaNombre(id: number): string {
@@ -74,14 +105,10 @@ export class HomeComponent implements OnInit {
     return estados.find((est) => est.id === id)?.nombre || 'Desconocido';
   }
 
-  onGenerarDiagnostico(incidencia: Incidencia) {
-    this.ds.setSelectedIncidencia(incidencia);
-    this.router.navigate(['/registrar-diagnostico']);
-  }
-
   ngOnInit() {
     this.extraerIncidencias();
   }
+
   handleRefresh(event: { target: { complete: () => void } }) {
     setTimeout(() => {
       window.location.reload();

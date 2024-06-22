@@ -73,3 +73,29 @@
   border-radius: 15px;
   margin: 20px;
 }
+
+ion-modal {
+  --width: 100%;
+  --height: 100%;
+  --background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    max-width: 90%;
+    max-height: 90%;
+  }
+}
+.additional-buttons {
+  display: block;
+  opacity: 1;
+  max-height: 110px;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.additional-buttons.hidden {
+  display: none;
+  opacity: 0;
+}

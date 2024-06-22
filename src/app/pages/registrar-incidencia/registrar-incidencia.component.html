@@ -82,7 +82,7 @@
 
   <div class="image-preview-container">
     <div *ngFor="let img of newImages; let i = index" class="image-preview">
-      <img [src]="img" alt="Selected Image" />
+      <img [src]="img" alt="Selected Image" loading="lazy" />
       <ion-button color="danger" (click)="removeImage(i)">
         <ion-icon slot="icon-only" name="trash"></ion-icon>
       </ion-button>

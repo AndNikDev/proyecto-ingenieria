@@ -3,87 +3,151 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home" text="Atrás"></ion-back-button>
     </ion-buttons>
-    <ion-title>Asignacion incidencia</ion-title>
+    <ion-title>Asignación Incidencia</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <h1 class="titulo-pantalla">Diagnostico Incidencia</h1>
+  <h1 class="titulo-pantalla">Diagnóstico Incidencia</h1>
 
-  <ion-item>
-    <ion-input
-      labelPlacement="floating"
-      label="Id. Incidencia"
-      class="input-asig"
-    ></ion-input>
-  </ion-item>
+  <form (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-input
+        labelPlacement="floating"
+        label="Id. Incidencia"
+        [(ngModel)]="incidencia!.CN_Id_Incidencia"
+        name="idIncidencia"
+        readonly
+        disabled
+        class="input-asig"
+      ></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-input
-      labelPlacement="floating"
-      label="Titulo Incidencia"
-      class="input-asig"
+    <ion-item>
+      <ion-input
+        labelPlacement="floating"
+        label="Título Incidencia"
+        [(ngModel)]="incidencia!.CT_Titulo_Incidencia"
+        name="tituloIncidencia"
+        readonly
+        disabled
+        class="input-asig"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-textarea
+        labelPlacement="floating"
+        label="Descripción"
+        [(ngModel)]="incidencia!.CT_Descripcion"
+        name="descripcion"
+        readonly
+        disabled
+        class="input-asig"
+      ></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-input
+        labelPlacement="floating"
+        label="Lugar"
+        [(ngModel)]="incidencia!.CT_Lugar"
+        name="lugar"
+        readonly
+        disabled
+        class="input-asig"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-select
+        labelPlacement="floating"
+        label="Técnico"
+        [(ngModel)]="selectedTecnico"
+        name="tecnico"
+        class="input-asig"
+      >
+        <ion-select-option
+          *ngFor="let tecnico of tecnicos"
+          [value]="tecnico.CN_Id_Usuario"
+        >
+          {{ tecnico.CT_Nombre }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-select
+        labelPlacement="floating"
+        label="Prioridad"
+        [(ngModel)]="incidencia!.CN_Id_Prioridad"
+        name="prioridad"
+        class="input-asig"
+      >
+        <ion-select-option [value]="1">Baja</ion-select-option>
+        <ion-select-option [value]="2">Media</ion-select-option>
+        <ion-select-option [value]="3">Alta</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-select
+        labelPlacement="floating"
+        label="Riesgo"
+        [(ngModel)]="incidencia!.CN_Id_Riesgo"
+        name="riesgo"
+        class="input-asig"
+      >
+        <ion-select-option [value]="1">Muy bajo</ion-select-option>
+        <ion-select-option [value]="2">Bajo</ion-select-option>
+        <ion-select-option [value]="3">Medio</ion-select-option>
+        <ion-select-option [value]="4">Alto</ion-select-option>
+        <ion-select-option [value]="5">Muy alto</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-select
+        labelPlacement="floating"
+        label="Afectación"
+        [(ngModel)]="incidencia!.CN_Id_Afectacion"
+        name="afectacion"
+        class="input-asig"
+      >
+        <ion-select-option [value]="1">Bajo</ion-select-option>
+        <ion-select-option [value]="2">Medio</ion-select-option>
+        <ion-select-option [value]="3">Alto</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-select
+        labelPlacement="floating"
+        label="Categoría"
+        [(ngModel)]="incidencia!.CN_Id_Categoria"
+        name="categoria"
+        class="input-asig"
+      >
+        <ion-select-option [value]="1">Reparación</ion-select-option>
+        <ion-select-option [value]="2"
+          >Intervención por causas naturales</ion-select-option
+        >
+        <ion-select-option [value]="3"
+          >Atención al mobiliario</ion-select-option
+        >
+      </ion-select>
+    </ion-item>
+
+    <ion-item lines="none">
+      <div class="image-preview-container">
+        <div *ngFor="let img of imagenesArray" class="image-preview">
+          <img [src]="img" alt="Imagen de Incidencia" loading="lazy" />
+        </div>
+      </div>
+    </ion-item>
+
+    <ion-button expand="full" type="submit" class="input-asig" shape="round"
+      >Enviar</ion-button
     >
-    </ion-input>
-  </ion-item>
-
-  <ion-item>
-    <ion-textarea
-      labelPlacement="floating"
-      label="Descripcion"
-      class="input-asig"
-    >
-    </ion-textarea>
-  </ion-item>
-
-  <ion-item>
-    <ion-input labelPlacement="floating" label="Lugar" class="input-asig">
-    </ion-input>
-  </ion-item>
-
-  <ion-item>
-    <ion-select
-      labelPlacement="floating"
-      label="Id. Tecnico"
-      class="input-asig"
-    >
-      <ion-select-option [value]="true">Sí</ion-select-option>
-    </ion-select>
-  </ion-item>
-
-  <ion-item>
-    <ion-select labelPlacement="floating" label="Prioridad" class="input-asig">
-      <ion-select-option [value]="true">Sí</ion-select-option>
-    </ion-select>
-  </ion-item>
-
-  <ion-item>
-    <ion-select labelPlacement="floating" label="Riesgo" class="input-asig">
-      <ion-select-option [value]="true">Sí</ion-select-option>
-    </ion-select>
-  </ion-item>
-
-  <ion-item>
-    <ion-select labelPlacement="floating" label="Afectación" class="input-asig">
-      <ion-select-option [value]="true">Sí</ion-select-option>
-    </ion-select>
-  </ion-item>
-
-  <ion-item>
-    <ion-select labelPlacement="floating" label="Categoría" class="input-asig">
-      <ion-select-option [value]="true">Sí</ion-select-option>
-    </ion-select>
-  </ion-item>
-
-  <ion-item>
-    <ion-input labelPlacement="floating" label="Imagenes" class="input-asig">
-    </ion-input>
-  </ion-item>
-
-  <!--
-TODO: estado, pasa de 1 a 2, este puede ser por debajo
-TODO: imagenes, se extraen
--->
-
-  <ion-button class="input-asig" shape="round">Enviar</ion-button>
+  </form>
 </ion-content>
