@@ -1,0 +1,13 @@
+{
+  "CT_Contrasena": "1913",
+  "CN_Cedula": "702930260",
+  "CT_Puesto": "Administrador",
+  "id": "1719015021853",
+  "CN_Celular": "72369282",
+  "CT_Nombre": "Andrew Alvarez",
+  "CT_Correo": "soynikolayk19@gmail.com",
+  "CN_Id_Rol": [1, 2],
+  "CT_Id_Foto_Usuario": "https://firebasestorage.googleapis.com/v0/b/ucrsgi-b3397.appspot.com/o/usuarios%2F1719015021853%2Fprofile_1719015704259.jpg?alt=media&token=b168150a-7756-4bc1-9364-39e9fe2bacfc",
+  "CN_Id_Usuario": 1719015021853,
+  "CN_Id_Departamento": null
+}

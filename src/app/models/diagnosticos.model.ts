@@ -6,5 +6,5 @@ export interface Diagnostico {
   CB_Requiere_Compra: boolean;
   CN_Tiempo_Estimado: number;
   CT_Observaciones?: string;
-  CN_Id_Imagen?: string[];
+  CN_Id_Imagen?: string;
 }

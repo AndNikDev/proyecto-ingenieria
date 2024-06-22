@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class RegistrarDiagnosticoComponent implements OnInit {
   incidenciaClic: Incidencia | null = null;
+  private contador: number;
 
   nuevoDiagnostico: Diagnostico = {
     CN_Id_Diagnostico: '',
@@ -21,7 +22,7 @@ export class RegistrarDiagnosticoComponent implements OnInit {
     CB_Requiere_Compra: false,
     CN_Tiempo_Estimado: 0,
     CT_Observaciones: '',
-    CN_Id_Imagen: [''],
+    CN_Id_Imagen: '',
   };
 
   CN_Id_Estado: number | null = null;
@@ -30,9 +31,11 @@ export class RegistrarDiagnosticoComponent implements OnInit {
     private ds: DiagnosticoService,
     public db: FirestoreService,
     private router: Router
-  ) {}
+  ) {
+    this.contador = 0;
+  }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.ds.selectedIncidencia$.subscribe((incidencia) => {
       this.incidenciaClic = incidencia;
       if (this.incidenciaClic) {
@@ -42,20 +45,22 @@ export class RegistrarDiagnosticoComponent implements OnInit {
       }
     });
 
-    this.nuevoDiagnostico.CN_Id_Diagnostico = this.generateCustomId();
+    this.nuevoDiagnostico.CN_Id_Diagnostico = await this.generateCustomId();
   }
 
-  generateCustomId(): string {
-    const now = new Date();
-    const year = now.getFullYear().toString().slice(-2);
-    const month = ('0' + (now.getMonth() + 1)).slice(-2);
-    const day = ('0' + now.getDate()).slice(-2);
-    const hours = ('0' + now.getHours()).slice(-2);
-    const minutes = ('0' + now.getMinutes()).slice(-2);
-    const seconds = ('0' + now.getSeconds()).slice(-2);
-    const counter = '000001';
+  async generateCustomId() {
+    const incidenciaId = this.incidenciaClic?.CN_Id_Incidencia;
+    let customId = '';
+    let exist = true;
 
-    return `${year}${month}${day}${hours}${minutes}${seconds}${counter}`;
+    while (exist) {
+      this.contador++;
+      const contadorStr = this.contador.toString().padStart(4, '0');
+      customId = `${incidenciaId}-${contadorStr}`;
+      exist = await this.db.docExists('T_Diagnosticos', customId);
+    }
+
+    return customId;
   }
 
   async crearDiagnostico() {

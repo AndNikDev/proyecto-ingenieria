@@ -8,6 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { RegistrarDiagnosticoComponent } from './registrar-diagnostico/registrar-diagnostico.component';
 import { AuthComponent } from './auth/auth.component';
 import { RegistroUsuariosComponent } from './registro-usuarios/registro-usuarios.component';
+import { AsignacionIncidenciaComponent } from './asignacion-incidencia/asignacion-incidencia.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { RegistroUsuariosComponent } from './registro-usuarios/registro-usuarios
     RegistrarIncidenciaComponent,
     RegistrarDiagnosticoComponent,
     RegistroUsuariosComponent,
+    AsignacionIncidenciaComponent,
   ],
   imports: [CommonModule, IonicModule, FormsModule, SharedModule],
 })

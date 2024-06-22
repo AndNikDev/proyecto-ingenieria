@@ -15,15 +15,18 @@ export class RegistrarIncidenciaComponent implements OnInit {
   newFiles: File[] = [];
   newImages: string[] = [];
 
+  usuarioString = localStorage.getItem('user');
+  usuario = this.usuarioString ? JSON.parse(this.usuarioString) : null;
+
   nuevaIncidencia: Incidencia = {
     CN_Id_Incidencia: '',
     CF_Fecha_Hora_Registro: new Date(),
-    CN_Id_Usuario: '',
+    CN_Id_Usuario: this.usuario ? Number(this.usuario.CN_Id_Usuario) : NaN,
     CT_Titulo_Incidencia: '',
     CT_Descripcion: '',
     CT_Lugar: '',
     CN_Id_Imagenes: '',
-    CN_Id_Tecnico: '',
+    CN_Id_Tecnico: NaN,
     CN_Id_Estado: 1,
     CT_Justificacion_Estado: '',
     CN_Id_Prioridad: NaN,
@@ -103,7 +106,7 @@ export class RegistrarIncidenciaComponent implements OnInit {
 
   resetInputs() {
     this.nuevaIncidencia = {
-      CN_Id_Usuario: '',
+      CN_Id_Usuario: NaN,
       CT_Titulo_Incidencia: '',
       CT_Lugar: '',
       CT_Descripcion: '',
