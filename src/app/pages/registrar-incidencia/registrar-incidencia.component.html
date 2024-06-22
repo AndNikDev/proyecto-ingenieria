@@ -10,40 +10,51 @@
 <ion-content>
   <h1 class="titulo-pantalla">Formulario de datos</h1>
 
-  <ion-input
-    [(ngModel)]="nuevaIncidencia.CT_Titulo_Incidencia"
-    (ngModelChange)="checkInputs()"
-    class="input-incidencia"
-    label="Titulo de la incidencia"
-    labelPlacement="floating"
-    fill="outline"
-    required
-  ></ion-input>
+  <ion-item>
+    <ion-input
+      [(ngModel)]="nuevaIncidencia.CT_Titulo_Incidencia"
+      (ngModelChange)="checkInputs()"
+      class="input-incidencia"
+      label="Titulo de la incidencia"
+      labelPlacement="floating"
+      fill="outline"
+      required
+    >
+    </ion-input>
+  </ion-item>
 
-  <ion-input
-    [(ngModel)]="nuevaIncidencia.CT_Lugar"
-    (ngModelChange)="checkInputs()"
-    class="input-incidencia"
-    label="Lugar del incidente"
-    labelPlacement="floating"
-    fill="outline"
-  ></ion-input>
+  <ion-item>
+    <ion-input
+      [(ngModel)]="nuevaIncidencia.CT_Lugar"
+      (ngModelChange)="checkInputs()"
+      class="input-incidencia"
+      label="Lugar del incidente"
+      labelPlacement="floating"
+      fill="outline"
+    >
+    </ion-input>
+  </ion-item>
 
-  <ion-textarea
-    [(ngModel)]="nuevaIncidencia.CT_Descripcion"
-    (ngModelChange)="checkInputs()"
-    class="input-incidencia"
-    label="Descripcion"
-    labelPlacement="floating"
-    fill="outline"
-  ></ion-textarea>
+  <ion-item>
+    <ion-textarea
+      [(ngModel)]="nuevaIncidencia.CT_Descripcion"
+      (ngModelChange)="checkInputs()"
+      class="input-incidencia"
+      label="Descripcion"
+      labelPlacement="floating"
+      fill="outline"
+    >
+    </ion-textarea>
+  </ion-item>
 
   <ion-buttons class="botones-imagenes">
     <!-- Botón para elegir archivo -->
-    <ion-button expand="block" fill="solid" color="primary">
+    <ion-button>
       <label for="custom-file-input" class="custom-label-input">
         <ion-icon slot="start" name="archive"></ion-icon> Elegir archivo
       </label>
+    </ion-button>
+    <div>
       <input
         type="file"
         name="photos"
@@ -51,12 +62,11 @@
         multiple
         hidden
         (change)="newImagenUpload($event)"
-        aria-label="Seleccionar archivos"
       />
-    </ion-button>
+    </div>
 
     <!-- Botón para cámaras -->
-    <ion-button expand="block" fill="solid" color="primary">
+    <ion-button>
       <label for="custom-camera-input" class="custom-label-input">
         <ion-icon slot="start" name="camera"></ion-icon> Tomar foto
       </label>
@@ -66,7 +76,6 @@
         id="custom-camera-input"
         multiple
         hidden
-        aria-label="Seleccionar archivos"
       />
     </ion-button>
   </ion-buttons>
@@ -79,7 +88,7 @@
       </ion-button>
     </div>
   </div>
-
+  <br />
   <ion-button
     class="input-incidencia"
     shape="round"

@@ -11,30 +11,30 @@
 }
 
 .image-preview-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 10px 0;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  margin: 10px 0 !important;
 }
 
 .image-preview {
-  position: relative;
-  display: inline-block;
-  margin-left: 20px;
+  position: relative !important;
+  display: inline-block !important;
+  margin-left: 20px !important;
 }
 
 .image-preview img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 8px;
+  width: 100px !important;
+  height: 100px !important;
+  object-fit: cover !important;
+  border-radius: 8px !important;
 }
 
 .image-preview ion-button {
-  position: absolute;
-  top: 0;
-  right: 0;
-  transform: translate(50%, -50%);
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  transform: translate(50%, -50%) !important;
 }
 
 .botones-imagenes {
@@ -45,8 +45,11 @@
 }
 
 .custom-label-input {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  color: white;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-around !important;
+  color: white !important;
+}
+.custom-file-input {
+  display: none;
 }

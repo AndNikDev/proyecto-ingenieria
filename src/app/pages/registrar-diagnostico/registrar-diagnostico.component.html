@@ -10,74 +10,86 @@
 <ion-content>
   <h1 class="titulo-pantalla">Diagnostico Incidencia</h1>
 
-  <ion-input
-    class="input-diagnostico"
-    label="Id. Incidencia"
-    labelPlacement="floating"
-    fill="outline"
-    disabled="true"
-    [value]="incidenciaClic?.CN_Id_Incidencia || ''"
-  >
-  </ion-input>
+  <ion-item>
+    <ion-input
+      class="input-diagnostico"
+      label="Id. Incidencia"
+      labelPlacement="floating"
+      fill="outline"
+      disabled="true"
+      [value]="incidenciaClic?.CN_Id_Incidencia || ''"
+    >
+    </ion-input>
+  </ion-item>
 
-  <ion-input
-    [(ngModel)]="nuevoDiagnostico.CT_Diagnostico"
-    class="input-diagnostico"
-    label="Diagnostico"
-    labelPlacement="floating"
-    fill="outline"
-    (ngModelChange)="checkInputs()"
-  >
-  </ion-input>
+  <ion-item>
+    <ion-input
+      [(ngModel)]="nuevoDiagnostico.CT_Diagnostico"
+      class="input-diagnostico"
+      label="Diagnostico"
+      labelPlacement="floating"
+      fill="outline"
+      (ngModelChange)="checkInputs()"
+    >
+    </ion-input>
+  </ion-item>
 
-  <ion-select
-    [(ngModel)]="nuevoDiagnostico.CB_Requiere_Compra"
-    class="input-diagnostico"
-    label="¿Requiere compra?"
-    labelPlacement="floating"
-    fill="outline"
-  >
-    <ion-select-option [value]="true">Sí</ion-select-option>
-    <ion-select-option [value]="false">No</ion-select-option>
-  </ion-select>
+  <ion-item>
+    <ion-select
+      [(ngModel)]="nuevoDiagnostico.CB_Requiere_Compra"
+      class="input-diagnostico"
+      label="¿Requiere compra?"
+      labelPlacement="floating"
+      fill="outline"
+    >
+      <ion-select-option [value]="true">Sí</ion-select-option>
+      <ion-select-option [value]="false">No</ion-select-option>
+    </ion-select>
+  </ion-item>
 
-  <ion-input
-    [(ngModel)]="nuevoDiagnostico.CN_Tiempo_Estimado"
-    class="input-diagnostico"
-    label="Tiempo estimado"
-    labelPlacement="floating"
-    fill="outline"
-    (ngModelChange)="checkInputs()"
-  >
-  </ion-input>
+  <ion-item>
+    <ion-input
+      [(ngModel)]="nuevoDiagnostico.CN_Tiempo_Estimado"
+      class="input-diagnostico"
+      label="Tiempo estimado"
+      labelPlacement="floating"
+      fill="outline"
+      (ngModelChange)="checkInputs()"
+    >
+    </ion-input>
+  </ion-item>
 
-  <ion-select
-    [(ngModel)]="CN_Id_Estado"
-    class="input-diagnostico"
-    label="Estado"
-    labelPlacement="floating"
-    fill="outline"
-    (ngModelChange)="checkInputs()"
-  >
-    <ion-select-option [value]="3">En revisión</ion-select-option>
-    <ion-select-option [value]="4">En reparación</ion-select-option>
-    <ion-select-option [value]="5">Pendiente de compra</ion-select-option>
-    <ion-select-option [value]="6">Terminado</ion-select-option>
-    <ion-select-option [value]="9">Cerrado</ion-select-option>
-  </ion-select>
+  <ion-item>
+    <ion-select
+      [(ngModel)]="CN_Id_Estado"
+      class="input-diagnostico"
+      label="Estado"
+      labelPlacement="floating"
+      fill="outline"
+      (ngModelChange)="checkInputs()"
+    >
+      <ion-select-option [value]="3">En revisión</ion-select-option>
+      <ion-select-option [value]="4">En reparación</ion-select-option>
+      <ion-select-option [value]="5">Pendiente de compra</ion-select-option>
+      <ion-select-option [value]="6">Terminado</ion-select-option>
+      <ion-select-option [value]="9">Cerrado</ion-select-option>
+    </ion-select>
+  </ion-item>
 
-  <ion-textarea
-    [(ngModel)]="nuevoDiagnostico.CT_Observaciones"
-    class="input-diagnostico"
-    label="Observaciones"
-    labelPlacement="floating"
-    fill="outline"
-  >
-  </ion-textarea>
+  <ion-item>
+    <ion-textarea
+      [(ngModel)]="nuevoDiagnostico.CT_Observaciones"
+      class="input-diagnostico"
+      label="Observaciones"
+      labelPlacement="floating"
+      fill="outline"
+    >
+    </ion-textarea>
+  </ion-item>
 
   <ion-buttons class="botones-imagenes">
     <!-- Botón para elegir archivo -->
-    <ion-button expand="block" fill="solid" color="primary">
+    <ion-button>
       <label for="custom-file-input" class="custom-label-input">
         <ion-icon slot="start" name="archive"></ion-icon> Elegir archivo
       </label>
@@ -93,7 +105,7 @@
     </ion-button>
 
     <!-- Botón para cámaras -->
-    <ion-button expand="block" fill="solid" color="primary">
+    <ion-button>
       <label for="custom-camera-input" class="custom-label-input">
         <ion-icon slot="start" name="camera"></ion-icon> Tomar foto
       </label>
