@@ -8,5 +8,82 @@
 </ion-header>
 
 <ion-content>
-  
+  <h1 class="titulo-pantalla">Diagnostico Incidencia</h1>
+
+  <ion-item>
+    <ion-input
+      labelPlacement="floating"
+      label="Id. Incidencia"
+      class="input-asig"
+    ></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-input
+      labelPlacement="floating"
+      label="Titulo Incidencia"
+      class="input-asig"
+    >
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-textarea
+      labelPlacement="floating"
+      label="Descripcion"
+      class="input-asig"
+    >
+    </ion-textarea>
+  </ion-item>
+
+  <ion-item>
+    <ion-input labelPlacement="floating" label="Lugar" class="input-asig">
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-select
+      labelPlacement="floating"
+      label="Id. Tecnico"
+      class="input-asig"
+    >
+      <ion-select-option [value]="true">Sí</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-select labelPlacement="floating" label="Prioridad" class="input-asig">
+      <ion-select-option [value]="true">Sí</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-select labelPlacement="floating" label="Riesgo" class="input-asig">
+      <ion-select-option [value]="true">Sí</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-select labelPlacement="floating" label="Afectación" class="input-asig">
+      <ion-select-option [value]="true">Sí</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-select labelPlacement="floating" label="Categoría" class="input-asig">
+      <ion-select-option [value]="true">Sí</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-input labelPlacement="floating" label="Imagenes" class="input-asig">
+    </ion-input>
+  </ion-item>
+
+  <!--
+TODO: estado, pasa de 1 a 2, este puede ser por debajo
+TODO: imagenes, se extraen
+-->
+
+  <ion-button class="input-asig" shape="round">Enviar</ion-button>
 </ion-content>
