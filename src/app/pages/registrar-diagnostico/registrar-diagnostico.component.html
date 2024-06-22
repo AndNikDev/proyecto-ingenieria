@@ -26,6 +26,7 @@
     label="Diagnostico"
     labelPlacement="floating"
     fill="outline"
+    (ngModelChange)="checkInputs()"
   >
   </ion-input>
 
@@ -46,6 +47,7 @@
     label="Tiempo estimado"
     labelPlacement="floating"
     fill="outline"
+    (ngModelChange)="checkInputs()"
   >
   </ion-input>
 
@@ -55,6 +57,7 @@
     label="Estado"
     labelPlacement="floating"
     fill="outline"
+    (ngModelChange)="checkInputs()"
   >
     <ion-select-option [value]="3">En revisión</ion-select-option>
     <ion-select-option [value]="4">En reparación</ion-select-option>
@@ -72,19 +75,53 @@
   >
   </ion-textarea>
 
-  <ion-input
-    class="input-diagnostico"
-    label="Fotos"
-    labelPlacement="floating"
-    fill="outline"
-  >
-    <ion-icon name="images-outline" slot="end"></ion-icon>
-  </ion-input>
+  <ion-buttons class="botones-imagenes">
+    <!-- Botón para elegir archivo -->
+    <ion-button expand="block" fill="solid" color="primary">
+      <label for="custom-file-input" class="custom-label-input">
+        <ion-icon slot="start" name="archive"></ion-icon> Elegir archivo
+      </label>
+      <input
+        type="file"
+        name="photos"
+        id="custom-file-input"
+        multiple
+        hidden
+        (change)="newImagenUpload($event)"
+        aria-label="Seleccionar archivos"
+      />
+    </ion-button>
+
+    <!-- Botón para cámaras -->
+    <ion-button expand="block" fill="solid" color="primary">
+      <label for="custom-camera-input" class="custom-label-input">
+        <ion-icon slot="start" name="camera"></ion-icon> Tomar foto
+      </label>
+      <input
+        type="file"
+        name="photos"
+        id="custom-camera-input"
+        multiple
+        hidden
+        aria-label="Seleccionar archivos"
+      />
+    </ion-button>
+  </ion-buttons>
+
+  <div class="image-preview-container">
+    <div *ngFor="let img of newImages; let i = index" class="image-preview">
+      <img [src]="img" alt="Selected Image" />
+      <ion-button color="danger" (click)="removeImage(i)">
+        <ion-icon slot="icon-only" name="trash"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
 
   <ion-button
     class="input-diagnostico"
     shape="round"
     (click)="crearDiagnostico()"
+    [disabled]="!allInputFilled"
     >Enviar</ion-button
   >
 </ion-content>

@@ -4,6 +4,7 @@ import { Incidencia } from 'src/app/models/incidencias.model';
 import { Diagnostico } from 'src/app/models/diagnosticos.model';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Router } from '@angular/router';
+import { FirestorageService } from 'src/app/services/firestorage.service';
 
 @Component({
   selector: 'app-registrar-diagnostico',
@@ -13,6 +14,8 @@ import { Router } from '@angular/router';
 export class RegistrarDiagnosticoComponent implements OnInit {
   incidenciaClic: Incidencia | null = null;
   private contador: number;
+  newFiles: File[] = [];
+  newImages: string[] = [];
 
   nuevoDiagnostico: Diagnostico = {
     CN_Id_Diagnostico: '',
@@ -30,7 +33,8 @@ export class RegistrarDiagnosticoComponent implements OnInit {
   constructor(
     private ds: DiagnosticoService,
     public db: FirestoreService,
-    private router: Router
+    private router: Router,
+    private fs: FirestorageService
   ) {
     this.contador = 0;
   }
@@ -48,6 +52,19 @@ export class RegistrarDiagnosticoComponent implements OnInit {
     this.nuevoDiagnostico.CN_Id_Diagnostico = await this.generateCustomId();
   }
 
+  allInputFilled = false;
+  checkInputs() {
+    this.allInputFilled =
+      this.nuevoDiagnostico.CT_Diagnostico.trim() !== '' &&
+      this.nuevoDiagnostico.CN_Tiempo_Estimado !== 0 &&
+      this.incidenciaClic?.CN_Id_Estado?.toString().trim() !== '';
+  }
+
+  removeImage(index: number) {
+    this.newFiles.splice(index, 1);
+    this.newImages.splice(index, 1);
+  }
+
   async generateCustomId() {
     const incidenciaId = this.incidenciaClic?.CN_Id_Incidencia;
     let customId = '';
@@ -61,6 +78,30 @@ export class RegistrarDiagnosticoComponent implements OnInit {
     }
 
     return customId;
+  }
+
+  async newImagenUpload(event: any) {
+    const files = event.target.files;
+    if (!files || files.length === 0) {
+      return;
+    }
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const nombreImagen = `${this.nuevoDiagnostico.CN_Id_Diagnostico}_${file.name}`;
+
+      try {
+        const downloadURL = await this.fs.uploadImage(
+          file,
+          'diagnosticos', // Path donde quieres guardar las imágenes en Firebase Storage
+          nombreImagen
+        );
+        this.newFiles.push(file);
+        this.newImages.push(downloadURL);
+      } catch (error) {
+        console.error('Error al cargar la imagen:', error);
+      }
+    }
   }
 
   async crearDiagnostico() {
