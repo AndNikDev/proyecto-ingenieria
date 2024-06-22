@@ -7,13 +7,15 @@ import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { RegistrarDiagnosticoComponent } from './registrar-diagnostico/registrar-diagnostico.component';
 import { AuthComponent } from './auth/auth.component';
+import { RegistroUsuariosComponent } from './registro-usuarios/registro-usuarios.component';
 
 @NgModule({
   declarations: [
+    AuthComponent,
     HomeComponent,
     RegistrarIncidenciaComponent,
     RegistrarDiagnosticoComponent,
-    AuthComponent,
+    RegistroUsuariosComponent,
   ],
   imports: [CommonModule, IonicModule, FormsModule, SharedModule],
 })

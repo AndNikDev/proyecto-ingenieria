@@ -1,3 +1,4 @@
+import { AuthService } from './services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd, Event } from '@angular/router';
 import { filter } from 'rxjs/operators';
@@ -10,7 +11,7 @@ import { filter } from 'rxjs/operators';
 export class AppComponent implements OnInit {
   disableSplitPane: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit() {
     this.router.events
@@ -23,5 +24,11 @@ export class AppComponent implements OnInit {
       .subscribe((event: NavigationEnd) => {
         this.disableSplitPane = event.url === '/auth';
       });
+  }
+  
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/auth']);
+    window.location.reload();
   }
 }

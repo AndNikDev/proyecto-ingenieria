@@ -5,14 +5,21 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AvatarComponent } from './components/avatar/avatar.component';
 import { LogoComponent } from './components/logo/logo.component';
+import { ProfilePhotoComponent } from './components/profile-photo/profile-photo.component';
 
 @NgModule({
-  declarations: [AvatarComponent, CustomInputComponent, LogoComponent],
+  declarations: [
+    AvatarComponent,
+    CustomInputComponent,
+    LogoComponent,
+    ProfilePhotoComponent,
+  ],
   exports: [
     AvatarComponent,
     ReactiveFormsModule,
     CustomInputComponent,
     LogoComponent,
+    ProfilePhotoComponent,
   ],
   imports: [CommonModule, IonicModule, ReactiveFormsModule, FormsModule],
 })

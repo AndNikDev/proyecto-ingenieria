@@ -22,9 +22,9 @@ export class RegistrarIncidenciaComponent implements OnInit {
     CT_Titulo_Incidencia: '',
     CT_Descripcion: '',
     CT_Lugar: '',
-    CN_Id_Imagenes: '', // Este será un string de URLs de imágenes separadas por comas
+    CN_Id_Imagenes: '',
     CN_Id_Tecnico: '',
-    CN_Id_Estado: NaN,
+    CN_Id_Estado: 1,
     CT_Justificacion_Estado: '',
     CN_Id_Prioridad: NaN,
     CN_Id_Riesgo: NaN,
@@ -45,10 +45,10 @@ export class RegistrarIncidenciaComponent implements OnInit {
 
   async newImagenUpload(event: any) {
     if (event.target.files && event.target.files.length > 0) {
-      this.newFiles = Array.from(event.target.files);
-      this.newImages = [];
-
-      for (let file of this.newFiles) {
+      const files: File[] = Array.from(event.target.files);
+      let file: File;
+      for (file of files) {
+        this.newFiles.push(file);
         const reader = new FileReader();
         reader.onload = (event: ProgressEvent<FileReader>) => {
           if (event.target) {
@@ -59,6 +59,11 @@ export class RegistrarIncidenciaComponent implements OnInit {
         reader.readAsDataURL(file);
       }
     }
+  }
+
+  removeImage(index: number) {
+    this.newFiles.splice(index, 1);
+    this.newImages.splice(index, 1);
   }
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method

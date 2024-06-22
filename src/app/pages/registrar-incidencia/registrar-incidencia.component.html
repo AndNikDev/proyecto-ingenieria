@@ -38,21 +38,46 @@
     fill="outline"
   ></ion-textarea>
 
-  <ion-input
-    type="file"
-    (change)="newImagenUpload($event)"
-    accept="image/*"
-    multiple
-    class="input-imagenes input-incidencia"
-  ></ion-input>
+  <ion-buttons class="botones-imagenes">
+    <!-- Botón para elegir archivo -->
+    <ion-button expand="block" fill="solid" color="primary">
+      <label for="custom-file-input" class="custom-label-input">
+        <ion-icon slot="start" name="archive"></ion-icon> Elegir archivo
+      </label>
+      <input
+        type="file"
+        name="photos"
+        id="custom-file-input"
+        multiple
+        hidden
+        (change)="newImagenUpload($event)"
+        aria-label="Seleccionar archivos"
+      />
+    </ion-button>
 
-  <div *ngFor="let image of newImages" class="imagenes">
-    <img
-      [src]="image"
-      alt="Image Preview"
-      style="width: 100px; height: 100px"
-      class="imagenes-img"
-    />
+    <!-- Botón para cámaras -->
+    <ion-button expand="block" fill="solid" color="primary">
+      <label for="custom-camera-input" class="custom-label-input">
+        <ion-icon slot="start" name="camera"></ion-icon> Tomar foto
+      </label>
+      <input
+        type="file"
+        name="photos"
+        id="custom-camera-input"
+        multiple
+        hidden
+        aria-label="Seleccionar archivos"
+      />
+    </ion-button>
+  </ion-buttons>
+
+  <div class="image-preview-container">
+    <div *ngFor="let img of newImages; let i = index" class="image-preview">
+      <img [src]="img" alt="Selected Image" />
+      <ion-button color="danger" (click)="removeImage(i)">
+        <ion-icon slot="icon-only" name="trash"></ion-icon>
+      </ion-button>
+    </div>
   </div>
 
   <ion-button
