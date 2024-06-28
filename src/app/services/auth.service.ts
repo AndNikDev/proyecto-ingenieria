@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { Usuario } from '../models/usuario.model';
-import { roles } from '../models/usuario.model';
 
-// ! si el codigo llega a fallar, entonces ponerle ? a los userSnapshot
 @Injectable({
   providedIn: 'root',
 })
@@ -26,15 +24,12 @@ export class AuthService {
       const user = userSnapshot?.docs[0].data();
       const userId = userSnapshot?.docs[0].id; // Obtener el ID del usuario
 
-      const rolesSnapshot = await this.db.collection<roles>('T_Roles', ref =>
-        ref.where('CN_Id_Rol', '==', user?.CN_Id_Rol)
-      ).get().toPromise();
+      // Obtén los roles asociados al usuario
+      const userRoles = user?.CN_Id_Rol || [];
 
-      const userRole = rolesSnapshot?.docs[0]?.data()?.CT_Nombre_Rol || 'usuario';
-
-      // Guarda los detalles del usuario en localStorage
+      // Guarda los detalles del usuario y roles en localStorage
       localStorage.setItem('user', JSON.stringify({ ...user, id: userId }));
-      localStorage.setItem('role', userRole);
+      localStorage.setItem('roles', JSON.stringify(userRoles));
       localStorage.setItem('session_expiry', (Date.now() + AuthService.SESSION_DURATION).toString());
 
       // Navegar a la página principal
@@ -46,7 +41,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('user');
-    localStorage.removeItem('role');
+    localStorage.removeItem('roles');
     localStorage.removeItem('session_expiry');
     this.router.navigate(['/login']);
   }
@@ -56,8 +51,9 @@ export class AuthService {
     return userJson ? JSON.parse(userJson) : null;
   }
 
-  getRole(): string | null {
-    return localStorage.getItem('role');
+  getRoles(): number[] {
+    const rolesJson = localStorage.getItem('roles');
+    return rolesJson ? JSON.parse(rolesJson) : [];
   }
 
   isLoggedIn(): boolean {

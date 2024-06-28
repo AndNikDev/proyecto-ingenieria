@@ -12,26 +12,35 @@ import { AuthGuard } from './guards/auth.guard';
 const routes: Routes = [
   { path: '', redirectTo: 'auth', pathMatch: 'full' },
   { path: 'auth', component: AuthComponent },
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  {
+    path: 'home',
+    component: HomeComponent,
+    canActivate: [AuthGuard],
+    data: { expectedRole: [1, 2, 3, 4, 5] },
+  },
   {
     path: 'registrar-incidencia',
-    loadChildren: () => import('./pages/registrar-incidencia/registrar-incidencia.component').then(m => m.RegistrarIncidenciaComponent),
+    component: RegistrarIncidenciaComponent,
     canActivate: [AuthGuard],
+    data: { expectedRole: [1, 2, 3, 4, 5] },
   },
   {
     path: 'registrar-diagnostico',
     component: RegistrarDiagnosticoComponent,
     canActivate: [AuthGuard],
+    data: { expectedRole: [4] },
   },
   {
     path: 'registro-usuarios',
     component: RegistroUsuariosComponent,
     canActivate: [AuthGuard],
+    data: { expectedRole: [1] },
   },
   {
     path: 'asignacion-incidencia',
     component: AsignacionIncidenciaComponent,
     canActivate: [AuthGuard],
+    data: { expectedRole: [5] },
   },
 ];
 

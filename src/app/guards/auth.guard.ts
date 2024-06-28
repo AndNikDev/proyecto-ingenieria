@@ -17,30 +17,26 @@ export class AuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): boolean | Observable<boolean> | Promise<boolean> {
+  ): boolean {
     const isLoggedIn = this.authService.isLoggedIn();
-    if (!isLoggedIn) {
-      this.router.navigate(['/auth']);
+    const userRoles = this.authService.getRoles();
+    const expectedRoles = route.data['expectedRole'] as number[];
+
+    const hasRequiredRole = expectedRoles.some((role) =>
+      userRoles.includes(role)
+    );
+
+    if (!hasRequiredRole) {
+      alert('No tienes permisos para acceder a esta página');
+      this.router.navigate(['/home']);
+      return false;
     }
-    return isLoggedIn;
+    if (!isLoggedIn || !hasRequiredRole) {
+      this.router.navigate(['/auth']);
+      console.log(userRoles, expectedRoles, isLoggedIn);
+      return false;
+    }
+
+    return true;
   }
 }
-
-// canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-//   const isLoggedIn = this.authService.isLoggedIn();
-//   const role = this.authService.getRole();
-//   const expectedRole = route.data.expectedRole;
-
-//   if (!isLoggedIn || (expectedRole && role !== expectedRole)) {
-//     this.router.navigate(['/auth']);
-//     return false;
-//   }
-//   return true;
-// }
-
-// {
-//   path: 'admin',
-//   component: AdminComponent,
-//   canActivate: [AuthGuard],
-//   data: { expectedRole: 'admin' }
-// }
