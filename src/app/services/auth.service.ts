@@ -51,6 +51,7 @@ export class AuthService {
     return userJson ? JSON.parse(userJson) : null;
   }
 
+
   getRoles(): number[] {
     const rolesJson = localStorage.getItem('roles');
     return rolesJson ? JSON.parse(rolesJson) : [];

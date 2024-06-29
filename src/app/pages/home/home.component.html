@@ -20,10 +20,17 @@
   <br />
   <h1 class="list-title">Lista de incidencias</h1>
 
-  <ion-card *ngFor="let incidencia of Incidencias" class="blanco" (click)="toggleCollapse(incidencia)">
-    <ion-card-header class="card-style" >
+  <ion-card
+    *ngFor="let incidencia of Incidencias"
+    class="blanco"
+    (click)="toggleCollapse(incidencia)"
+  >
+    <ion-card-header class="card-style">
       <ion-card-title>{{ incidencia.CT_Titulo_Incidencia }}</ion-card-title>
-      <div class="circle" [ngClass]="getColorPrioridad(incidencia.CN_Id_Prioridad || 0)"></div>
+      <div
+        class="circle"
+        [ngClass]="getColorPrioridad(incidencia.CN_Id_Prioridad || 0)"
+      ></div>
     </ion-card-header>
 
     <ion-card-content>
@@ -37,13 +44,26 @@
         </div>
       </div>
 
-      <div class="additional-buttons" [ngClass]="{ 'hidden': !expanded[incidencia.CN_Id_Incidencia!] }" [@toggleHeight]="expanded[incidencia.CN_Id_Incidencia!] ? 'visible' : 'hidden'">
-        <ion-button expand="block" (click)="onGenerarDiagnostico(incidencia)">
-          Generar Diagnóstico
+      <div
+        class="additional-buttons"
+        [ngClass]="{ hidden: !expanded[incidencia.CN_Id_Incidencia!] }"
+        [@toggleHeight]="
+          expanded[incidencia.CN_Id_Incidencia!] ? 'visible' : 'hidden'
+        "
+      >
+        <ion-button
+          class="d-none"
+          expand="block"
+          (click)="onGenerarDiagnostico(incidencia)"
+        >
+          Registrar Diagnóstico
         </ion-button>
+        <ion-button expand="block"> Finalizar Diagnostico </ion-button>
+
         <ion-button expand="block" (click)="onAsignarIncidencia(incidencia)">
           Asignar Incidencia
         </ion-button>
+        <ion-button expand="block"> Cerrar incidencia </ion-button>
       </div>
     </ion-card-content>
   </ion-card>

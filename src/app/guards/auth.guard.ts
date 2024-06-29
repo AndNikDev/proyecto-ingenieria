@@ -5,7 +5,6 @@ import {
   RouterStateSnapshot,
   Router,
 } from '@angular/router';
-import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
 @Injectable({
@@ -26,14 +25,13 @@ export class AuthGuard implements CanActivate {
       userRoles.includes(role)
     );
 
-    if (!hasRequiredRole) {
-      alert('No tienes permisos para acceder a esta página');
-      this.router.navigate(['/home']);
+    if (!isLoggedIn) {
+      this.router.navigate(['/auth']);
       return false;
     }
-    if (!isLoggedIn || !hasRequiredRole) {
-      this.router.navigate(['/auth']);
-      console.log(userRoles, expectedRoles, isLoggedIn);
+
+    if (isLoggedIn && !hasRequiredRole) {
+      this.router.navigate(['/home']);
       return false;
     }
 

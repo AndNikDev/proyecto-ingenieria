@@ -10,6 +10,16 @@ import { UsuariosService } from '../../../services/usuarios.service';
 })
 export class ProfilePhotoComponent {
   user: any;
+  roleNames: string = '';
+  tooltipRoles: string = '';
+
+  private roleMap: { [key: number]: string } = {
+    1: 'Administrador',
+    2: 'Usuario',
+    3: 'Encargado',
+    4: 'Técnico',
+    5: 'Supervisor',
+  };
 
   constructor(
     private actionSheetController: ActionSheetController,
@@ -21,6 +31,18 @@ export class ProfilePhotoComponent {
 
   loadUser() {
     this.user = JSON.parse(localStorage.getItem('user')!);
+    this.processRoles();
+  }
+
+  processRoles() {
+    if (this.user && this.user.CN_Id_Rol) {
+      const roles: number[] = this.user.CN_Id_Rol;
+      const filteredRoles = roles.filter(role => role !== 2);
+      const primaryRole = filteredRoles.length ? Math.min(...filteredRoles) : 2;
+
+      this.roleNames = this.roleMap[primaryRole] || 'Desconocido';
+      this.tooltipRoles = roles.map(role => this.roleMap[role]).join(', ');
+    }
   }
 
   async presentActionSheet() {

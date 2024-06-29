@@ -1,15 +1,12 @@
 <div class="center-content">
   <ion-avatar slot="start" (click)="presentActionSheet()" class="large-avatar">
     <img
-      [src]="
-        user?.CT_Id_Foto_Usuario ||
-        'https://ionicframework.com/docs/img/demos/avatar.svg'
-      "
+      [src]="user?.CT_Id_Foto_Usuario || 'https://ionicframework.com/docs/img/demos/avatar.svg'"
       alt="Profile Photo"
     />
   </ion-avatar>
   <ion-label>
     <h2>{{ user?.CT_Nombre }}</h2>
-    <p>{{ user?.CT_Puesto }}</p>
+    <p class="role-tooltip" [title]="tooltipRoles">{{ roleNames }}</p>
   </ion-label>
 </div>
