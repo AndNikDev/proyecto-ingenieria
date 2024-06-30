@@ -7,6 +7,7 @@ import { RegistrarDiagnosticoComponent } from './pages/registrar-diagnostico/reg
 import { AuthComponent } from './pages/auth/auth.component';
 import { RegistroUsuariosComponent } from './pages/registro-usuarios/registro-usuarios.component';
 import { AsignacionIncidenciaComponent } from './pages/asignacion-incidencia/asignacion-incidencia.component';
+import { FinalizarIncidenciaComponent } from './pages/finalizar-incidencia/finalizar-incidencia.component';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
@@ -39,6 +40,12 @@ const routes: Routes = [
   {
     path: 'asignacion-incidencia',
     component: AsignacionIncidenciaComponent,
+    canActivate: [AuthGuard],
+    data: { expectedRole: [3] },
+  },
+  {
+    path: 'finalizar-incidencia',
+    component: FinalizarIncidenciaComponent,
     canActivate: [AuthGuard],
     data: { expectedRole: [5] },
   },

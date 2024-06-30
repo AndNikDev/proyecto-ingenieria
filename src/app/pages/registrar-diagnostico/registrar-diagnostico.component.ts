@@ -13,14 +13,13 @@ import { FirestorageService } from 'src/app/services/firestorage.service';
 })
 export class RegistrarDiagnosticoComponent implements OnInit {
   incidenciaClic: Incidencia | null = null;
-  private contador: number;
   newFiles: File[] = [];
   newImages: string[] = [];
 
   nuevoDiagnostico: Diagnostico = {
-    CN_Id_Diagnostico: '',
+    CN_Id_Diagnostico: '', // Se asignará más adelante en ngOnInit
     CF_Fecha_Hora: new Date(),
-    CN_Id_Incidencia: '',
+    CN_Id_Incidencia: '', // Se asignará desde la incidencia seleccionada
     CT_Diagnostico: '',
     CB_Requiere_Compra: false,
     CN_Tiempo_Estimado: 0,
@@ -35,21 +34,17 @@ export class RegistrarDiagnosticoComponent implements OnInit {
     public db: FirestoreService,
     private router: Router,
     private fs: FirestorageService
-  ) {
-    this.contador = 0;
-  }
+  ) {}
 
-  async ngOnInit() {
+  ngOnInit() {
     this.ds.selectedIncidencia$.subscribe((incidencia) => {
       this.incidenciaClic = incidencia;
       if (this.incidenciaClic) {
-        this.nuevoDiagnostico.CN_Id_Incidencia =
-          this.incidenciaClic.CN_Id_Incidencia || '';
+        this.nuevoDiagnostico.CN_Id_Diagnostico = this.incidenciaClic.CN_Id_Incidencia || '';
+        this.nuevoDiagnostico.CN_Id_Incidencia = this.incidenciaClic.CN_Id_Incidencia || '';
         this.CN_Id_Estado = this.incidenciaClic.CN_Id_Estado ?? null;
       }
     });
-
-    this.nuevoDiagnostico.CN_Id_Diagnostico = await this.generateCustomId();
   }
 
   allInputFilled = false;
@@ -63,21 +58,6 @@ export class RegistrarDiagnosticoComponent implements OnInit {
   removeImage(index: number) {
     this.newFiles.splice(index, 1);
     this.newImages.splice(index, 1);
-  }
-
-  async generateCustomId() {
-    const incidenciaId = this.incidenciaClic?.CN_Id_Incidencia;
-    let customId = '';
-    let exist = true;
-
-    while (exist) {
-      this.contador++;
-      const contadorStr = this.contador.toString().padStart(4, '0');
-      customId = `${incidenciaId}-${contadorStr}`;
-      exist = await this.db.docExists('T_Diagnosticos', customId);
-    }
-
-    return customId;
   }
 
   async newImagenUpload(event: any) {

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Incidencia } from '../models/incidencias.model';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ export class DiagnosticoService {
   selectedIncidencia$: Observable<Incidencia | null> =
     this.selectedIncidenciaSubject.asObservable();
 
-  constructor() {}
+  constructor(private firestore: AngularFirestore) {}
 
   // Método para obtener la incidencia seleccionada
   getSelectedIncidencia(): Incidencia | null {
@@ -21,5 +22,21 @@ export class DiagnosticoService {
   // Método para actualizar la incidencia seleccionada
   setSelectedIncidencia(incidencia: Incidencia | null) {
     this.selectedIncidenciaSubject.next(incidencia);
+  }
+
+  async existeDiagnostico(idIncidencia: string): Promise<boolean> {
+    const path = 'T_Diagnosticos';
+    try {
+      const snapshot = await this.firestore
+        .collection(path, (ref) =>
+          ref.where('CN_Id_Incidencia', '==', idIncidencia)
+        )
+        .get()
+        .toPromise();
+      return !snapshot?.empty;
+    } catch (error) {
+      console.error('Error checking diagnosis existence: ', error);
+      throw error;
+    }
   }
 }

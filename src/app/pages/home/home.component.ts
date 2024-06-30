@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { DiagnosticoService } from 'src/app/services/diagnostico.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { Incidencia } from 'src/app/models/incidencias.model';
 import {
   trigger,
@@ -26,12 +27,19 @@ import {
 export class HomeComponent implements OnInit {
   Incidencias: Incidencia[] = [];
   expanded: { [key: string]: boolean } = {};
+  userRoles: number[] = []; // Almacenar roles del usuario actual
 
   constructor(
     private router: Router,
     public db: FirestoreService,
-    private ds: DiagnosticoService
+    private ds: DiagnosticoService,
+    private authService: AuthService // Servicio de autenticación
   ) {}
+
+  ngOnInit() {
+    this.userRoles = this.authService.getRoles(); // Obtener roles del usuario actual
+    this.extraerIncidencias();
+  }
 
   redirigir() {
     this.router.navigate(['/registrar-incidencia']);
@@ -42,7 +50,7 @@ export class HomeComponent implements OnInit {
     this.db.getCollectionWithId<Incidencia>(path).subscribe((data) => {
       this.Incidencias = data;
       // Inicializar el estado de visibilidad para cada incidencia
-      this.Incidencias.forEach(incidencia => {
+      this.Incidencias.forEach((incidencia) => {
         this.expanded[incidencia.CN_Id_Incidencia!] = false;
       });
     });
@@ -63,6 +71,59 @@ export class HomeComponent implements OnInit {
   onAsignarIncidencia(incidencia: Incidencia) {
     this.ds.setSelectedIncidencia(incidencia);
     this.router.navigate(['/asignacion-incidencia']);
+  }
+
+  onFinalizarDiagnostico(incidencia: Incidencia) {
+    this.ds.setSelectedIncidencia(incidencia);
+    this.router.navigate(['/finalizar-diagnostico']);
+  }
+
+  onCerrarIncidencia(incidencia: Incidencia) {
+    this.ds.setSelectedIncidencia(incidencia);
+    this.router.navigate(['/cerrar-incidencia']);
+  }
+
+  mostrarBotonGenerarDiagnostico(incidencia: Incidencia): boolean {
+    const rolTecnico = 4;
+    return (
+      this.userRoles.includes(rolTecnico) &&
+      !this.existeDiagnostico(incidencia.CN_Id_Incidencia!)
+    );
+  }
+
+  mostrarBotonFinalizarDiagnostico(incidencia: Incidencia): boolean {
+    const rolTecnico = 4;
+    return (
+      this.userRoles.includes(rolTecnico) &&
+      this.existeDiagnostico(incidencia.CN_Id_Incidencia!)
+    );
+  }
+
+  mostrarBotonAsignarIncidencia(incidencia: Incidencia): boolean {
+    const rolEncargado = 3;
+    const estadoRegistrado = 1;
+    const estadoRechazado = 8;
+    return (
+      this.userRoles.includes(rolEncargado) &&
+      (incidencia.CN_Id_Estado === estadoRegistrado ||
+        incidencia.CN_Id_Estado === estadoRechazado)
+    );
+  }
+
+  mostrarBotonCerrarIncidencia(incidencia: Incidencia): boolean {
+    const rolSupervisor = 5;
+    const estadoTerminado = 6;
+    return (
+      this.userRoles.includes(rolSupervisor) &&
+      incidencia.CN_Id_Estado === estadoTerminado
+    );
+  }
+
+  existeDiagnostico(idIncidencia: string): boolean {
+    if (idIncidencia) {
+      return false;
+    }
+    return true;
   }
 
   getCategoriaNombre(id: number): string {
@@ -103,10 +164,6 @@ export class HomeComponent implements OnInit {
       { id: 9, nombre: 'Cerrado' },
     ];
     return estados.find((est) => est.id === id)?.nombre || 'Desconocido';
-  }
-
-  ngOnInit() {
-    this.extraerIncidencias();
   }
 
   handleRefresh(event: { target: { complete: () => void } }) {
